@@ -154,6 +154,13 @@ def lookup_product(barcode):
         "category": product.get("categories"),
         "image": product.get("image_url")
     }), 200
+#Run the app
+if __name__ == "__main__":
+    app.run(
+        debug=True,
+        host="0.0.0.0",
+        port=5555
+    )
 
 
 
