@@ -184,6 +184,47 @@ def search_product():
     except requests.exceptions.RequestException:
         handle_connection_error()
 
+#menu function to display the main menu and handle user input
+def menu():
+
+    while True:
+
+        print_separator()
+
+        print("Inventory Management System")
+        print("1. View Inventory")
+        print("2. Add Product")
+        print("3. Update Product")
+        print("4. Delete Product")
+        print("5. Find Product (OpenFoodFacts)")
+        print("6. Exit")
+
+        choice = input("\nChoose an option: ").strip()
+
+        if choice == "1":
+            view_inventory()
+
+        elif choice == "2":
+            add_product()
+
+        elif choice == "3":
+            update_product()
+
+        elif choice == "4":
+            delete_product()
+
+        elif choice == "5":
+            search_product()
+
+        elif choice == "6":
+            print("\nGoodbye!")
+            break
+
+        else:
+            print("Invalid option. Please choose 1-6.")
+
+
+
 
 
 
