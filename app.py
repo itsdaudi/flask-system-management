@@ -77,6 +77,47 @@ def add_product():
         "product": new_product
     }), 201
 
+#update product in inventory
+@app.route("/inventory/<int:item_id>", methods=["PATCH"])
+def update_product(item_id):
+
+    data = request.get_json()
+
+    for item in inventory:
+
+        if item["id"] == item_id:
+
+            if "barcode" in data:
+                item["barcode"] = data["barcode"]
+
+            if "product_name" in data:
+                item["product_name"] = data["product_name"]
+
+            if "brand" in data:
+                item["brand"] = data["brand"]
+
+            if "category" in data:
+                item["category"] = data["category"]
+
+            if "ingredients" in data:
+                item["ingredients"] = data["ingredients"]
+
+            if "quantity" in data:
+                item["quantity"] = data["quantity"]
+
+            if "price" in data:
+                item["price"] = data["price"]
+
+            return jsonify({
+                "message": "Product updated successfully.",
+                "product": item
+            }), 200
+
+    return jsonify({
+        "error": "Product not found."
+    }), 404
+
+
 
 
 
