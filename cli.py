@@ -83,5 +83,43 @@ def add_product():
     except requests.exceptions.RequestException:
         handle_connection_error()
 
+#update product function to prompt user for product ID and new details, then send a PATCH request to the API
+def update_product():
+
+    print_separator()
+
+    try:
+
+        product_id = int(input("Product ID: "))
+        quantity = int(input("New Quantity: "))
+        price = float(input("New Price: "))
+
+        payload = {
+            "quantity": quantity,
+            "price": price
+        }
+
+        response = requests.patch(
+            f"{BASE_URL}/inventory/{product_id}",
+            json=payload,
+            timeout=5
+        )
+
+        if response.status_code == 200:
+            print("Product updated successfully.")
+
+        elif response.status_code == 404:
+            print("Product not found.")
+
+        else:
+            print(response.json())
+
+    except ValueError:
+        print("Invalid numeric input.")
+
+    except requests.exceptions.RequestException:
+        handle_connection_error()
+
+
 
 
