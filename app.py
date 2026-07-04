@@ -135,6 +135,26 @@ def delete_product(item_id):
         "error": "Product not found."
     }), 404
 
+#lookup product by barcode
+@app.route("/lookup/<barcode>", methods=["GET"])
+def lookup_product(barcode):
+
+    product = fetch_product_by_barcode(barcode)
+
+    if product is None:
+
+        return jsonify({
+            "error": "Product not found."
+        }), 404
+
+    return jsonify({
+        "product_name": product.get("product_name"),
+        "brand": product.get("brands"),
+        "ingredients": product.get("ingredients_text"),
+        "category": product.get("categories"),
+        "image": product.get("image_url")
+    }), 200
+
 
 
 
