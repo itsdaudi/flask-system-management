@@ -117,6 +117,24 @@ def update_product(item_id):
         "error": "Product not found."
     }), 404
 
+#delete product in inventory
+@app.route("/inventory/<int:item_id>", methods=["DELETE"])
+def delete_product(item_id):
+
+    for item in inventory:
+
+        if item["id"] == item_id:
+
+            inventory.remove(item)
+
+            return jsonify({
+                "message": "Product deleted successfully."
+            }), 200
+
+    return jsonify({
+        "error": "Product not found."
+    }), 404
+
 
 
 
