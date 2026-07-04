@@ -41,4 +41,47 @@ def view_inventory():
     except requests.exceptions.RequestException:
         handle_connection_error()
 
+#add product function to prompt user for product details and send a POST request to the API
+def add_product():
+
+    print_separator()
+
+    try:
+
+        barcode = input("Barcode: ").strip()
+        product_name = input("Product Name: ").strip()
+        brand = input("Brand: ").strip()
+        category = input("Category: ").strip()
+
+        quantity = int(input("Quantity: "))
+        price = float(input("Price: "))
+
+        payload = {
+            "barcode": barcode,
+            "product_name": product_name,
+            "brand": brand,
+            "category": category,
+            "quantity": quantity,
+            "price": price
+        }
+
+        response = requests.post(
+            f"{BASE_URL}/inventory",
+            json=payload,
+            timeout=5
+        )
+
+        if response.status_code == 201:
+            print("\nProduct added successfully.")
+
+        else:
+            print(response.json())
+
+    except ValueError:
+        print("Quantity must be an integer and price must be numeric.")
+
+    except requests.exceptions.RequestException:
+        handle_connection_error()
+
+
 
