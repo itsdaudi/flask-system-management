@@ -32,3 +32,11 @@ def test_get_single_product(client):
     data = response.get_json()
 
     assert data["id"] == 1
+
+#test invalid product route test
+def test_get_invalid_product(client):
+
+    response = client.get("/inventory/999")
+
+    assert response.status_code == 404
+
