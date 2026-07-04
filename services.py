@@ -22,3 +22,36 @@ def fetch_product_by_barcode(barcode):
         print(f"API Error: {error}")
         return None
 
+#fetch product by name from Open Food Facts API
+def fetch_product_by_name(product_name):
+
+    try:
+        params = {
+            "search_terms": product_name,
+            "search_simple": 1,
+            "action": "process",
+            "json": 1
+        }
+
+        response = requests.get(
+            SEARCH_URL,
+            params=params,
+            timeout=10
+        )
+
+        response.raise_for_status()
+
+        data = response.json()
+
+        products = data.get("products", [])
+
+        if products:
+            return products[0]
+
+        return None
+
+    except requests.exceptions.RequestException as error:
+        print(f"API Error: {error}")
+        return None
+
+
