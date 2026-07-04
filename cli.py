@@ -120,6 +120,37 @@ def update_product():
     except requests.exceptions.RequestException:
         handle_connection_error()
 
+#delete product function to prompt user for product ID and send a DELETE request to the API
+def delete_product():
+
+    print_separator()
+
+    try:
+
+        product_id = int(input("Product ID: "))
+
+        response = requests.delete(
+            f"{BASE_URL}/inventory/{product_id}",
+            timeout=5
+        )
+
+        if response.status_code == 200:
+            print("Product deleted successfully.")
+
+        elif response.status_code == 404:
+            print("Product not found.")
+
+        else:
+            print(response.json())
+
+    except ValueError:
+        print("Invalid ID.")
+
+    except requests.exceptions.RequestException:
+        handle_connection_error()
+
+
+
 
 
 
