@@ -53,5 +53,43 @@ def fetch_product_by_name(product_name):
     except requests.exceptions.RequestException as error:
         print(f"API Error: {error}")
         return None
+    
+#enrich inventory item with data from Open Food Facts API 
+def enrich_inventory_item(item):
+
+    barcode = item.get("barcode")
+
+    if not barcode:
+        return item
+
+    product = fetch_product_by_barcode(barcode)
+
+    if not product:
+        return item
+
+    item["product_name"] = product.get(
+        "product_name",
+        item.get("product_name")
+    )
+
+    item["brand"] = product.get(
+        "brands",
+        item.get("brand", "")
+    )
+
+    item["category"] = product.get(
+        "categories",
+        item.get("category", "")
+    )
+
+    item["ingredients"] = product.get(
+        "ingredients_text",
+        item.get("ingredients", "")
+    )
+
+    item["image"] = product.get("image_url", "")
+
+    return item
+
 
 
