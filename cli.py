@@ -149,6 +149,42 @@ def delete_product():
     except requests.exceptions.RequestException:
         handle_connection_error()
 
+#search product function to prompt user for barcode and send a GET request to the API
+def search_product():
+
+    print_separator()
+
+    barcode = input("Enter barcode: ").strip()
+
+    try:
+
+        response = requests.get(
+            f"{BASE_URL}/lookup/{barcode}",
+            timeout=10
+        )
+
+        if response.status_code == 200:
+
+            product = response.json()
+
+            print("\nProduct Found")
+            print("-" * 40)
+            print("Name:", product.get("product_name", "N/A"))
+            print("Brand:", product.get("brand", "N/A"))
+            print("Category:", product.get("category", "N/A"))
+            print("Ingredients:", product.get("ingredients", "N/A"))
+            print("Image:", product.get("image", "N/A"))
+
+        elif response.status_code == 404:
+            print("Product not found.")
+
+        else:
+            print(response.json())
+
+    except requests.exceptions.RequestException:
+        handle_connection_error()
+
+
 
 
 
