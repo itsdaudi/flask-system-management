@@ -223,6 +223,10 @@ def menu():
         else:
             print("Invalid option. Please choose 1-6.")
 
+#start the CLI application
+if __name__ == "__main__":
+    menu()            
+
 
 
 
