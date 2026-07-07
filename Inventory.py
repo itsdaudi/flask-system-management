@@ -1,4 +1,4 @@
-Inventory = [
+inventory = [
     {
         "id": 1,
         "barcode": "737628064502",
@@ -50,5 +50,3 @@ Inventory = [
         "price": 110.00
     }
 ]
-
-inventory = Inventory

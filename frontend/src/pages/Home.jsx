@@ -8,9 +8,9 @@ import {
   lookupProduct,
 } from "../api/inventoryApi";
 
-import AddProductForm from "../components/AddProductForm";
+import AddProduct from "../components/AddProduct";
 import InventoryTable from "../components/InventoryTable";
-import UpdateProductForm from "../components/UpdateProductForm";
+import UpdateProductForm from "../components/UpdateProduct";
 import SearchProduct from "../components/SearchProduct";
 
 function Home() {
@@ -108,7 +108,7 @@ function Home() {
     <div className="container">
       <h1>Inventory Dashboard</h1>
 
-      <AddProductForm onAdd={handleAdd} />
+      <AddProduct onAdd={handleAdd} />
 
       <SearchProduct onSearch={handleSearch} />
 
@@ -147,7 +147,7 @@ function Home() {
       )}
 
       {selectedProduct && (
-        <UpdateProductForm
+        <UpdateProduct
           product={selectedProduct}
           onUpdate={handleUpdate}
         />

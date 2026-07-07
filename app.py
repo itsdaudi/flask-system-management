@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
-from inventory import inventory
+from flask_cors import CORS
+from inventory import Inventory
 from services import fetch_product_by_barcode
 
 app = Flask(__name__)
+CORS(app)
 
 #Home route
 @app.route("/")
@@ -10,24 +12,24 @@ def home():
     return jsonify({
         "message": "Inventory Management REST API",
         "available_routes": {
-            "GET /inventory": "View all inventory",
-            "GET /inventory/<id>": "View one product",
-            "POST /inventory": "Add product",
-            "PATCH /inventory/<id>": "Update product",
-            "DELETE /inventory/<id>": "Delete product",
+            "GET /Inventory": "View all inventory",
+            "GET /Inventory/<id>": "View one product",
+            "POST /Inventory": "Add product",
+            "PATCH /Inventory/<id>": "Update product",
+            "DELETE /Inventory/<id>": "Delete product",
             "GET /lookup/<barcode>": "Lookup OpenFoodFacts product"
         }
     })
 #get all products in inventory
-@app.route("/inventory", methods=["GET"])
-def get_inventory():
-    return jsonify(inventory), 200
+@app.route("/Inventory", methods=["GET"])
+def get_Inventory():
+    return jsonify(Inventory), 200
 
 #get one product in inventory
-@app.route("/inventory/<int:item_id>", methods=["GET"])
+@app.route("/Inventory/<int:item_id>", methods=["GET"])
 def get_product(item_id):
 
-    for item in inventory:
+    for item in Inventory:
         if item["id"] == item_id:
             return jsonify(item), 200
 
@@ -36,7 +38,7 @@ def get_product(item_id):
     }), 404
 
 #add product to inventory
-@app.route("/inventory", methods=["POST"])
+@app.route("/Inventory", methods=["POST"])
 def add_product():
 
     data = request.get_json()
@@ -55,7 +57,7 @@ def add_product():
             }), 400
 
     new_id = max(
-        [item["id"] for item in inventory],
+        [item["id"] for item in Inventory],
         default=0
     ) + 1
 
@@ -70,7 +72,7 @@ def add_product():
         "price": data["price"]
     }
 
-    inventory.append(new_product)
+    Inventory.append(new_product)
 
     return jsonify({
         "message": "Product added successfully.",
@@ -78,12 +80,12 @@ def add_product():
     }), 201
 
 #update product in inventory
-@app.route("/inventory/<int:item_id>", methods=["PATCH"])
+@app.route("/Inventory/<int:item_id>", methods=["PATCH"])
 def update_product(item_id):
 
     data = request.get_json()
 
-    for item in inventory:
+    for item in Inventory:
 
         if item["id"] == item_id:
 
@@ -118,14 +120,14 @@ def update_product(item_id):
     }), 404
 
 #delete product in inventory
-@app.route("/inventory/<int:item_id>", methods=["DELETE"])
+@app.route("/Inventory/<int:item_id>", methods=["DELETE"])
 def delete_product(item_id):
 
-    for item in inventory:
+    for item in Inventory:
 
         if item["id"] == item_id:
 
-            inventory.remove(item)
+            Inventory.remove(item)
 
             return jsonify({
                 "message": "Product deleted successfully."
