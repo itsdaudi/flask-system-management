@@ -148,7 +148,7 @@ function Home() {
       )}
 
       {selectedProduct && (
-        <UpdateProduct
+        <UpdateProductForm
           product={selectedProduct}
           onUpdate={handleUpdate}
         />
