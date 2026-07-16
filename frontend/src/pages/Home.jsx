@@ -48,26 +48,7 @@ function Home() {
     }
   };
 
-  // ----------------------------
-  // Update Product
-  // ----------------------------
-  const handleUpdate = async (id, product) => {
-    try {
-      await updateProduct(id, {
-        quantity: product.quantity,
-        price: product.price,
-      });
-
-      setSelectedProduct(null);
-      loadInventory();
-
-      alert("Product updated.");
-    } catch (error) {
-      console.error(error);
-      alert("Update failed.");
-    }
-  };
-
+ 
   // ----------------------------
   // Delete Product
   // ----------------------------
@@ -86,6 +67,26 @@ function Home() {
     } catch (error) {
       console.error(error);
       alert("Delete failed.");
+    }
+  };
+
+  // ----------------------------
+  // Update Product
+  // ----------------------------
+  const handleUpdate = async (id, product) => {
+    try {
+      await updateProduct(id, {
+        quantity: product.quantity,
+        price: product.price,
+      });
+
+      setSelectedProduct(null);
+      loadInventory();
+
+      alert("Product updated.");
+    } catch (error) {
+      console.error(error);
+      alert("Update failed.");
     }
   };
 
